@@ -1,0 +1,23 @@
+{
+  "name": "phaser-joystick",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:phone": "concurrently \"vite --host 0.0.0.0\" \"ngrok http 5173\"",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.2",
+    "concurrently": "^10.0.7",
+    "vite": "^8.3.6"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/ios": "^8.6.2",
+    "phaser": "^4.2.1",
+    "phaser4-rex-plugins": "^4.2.0"
+  }
+}
