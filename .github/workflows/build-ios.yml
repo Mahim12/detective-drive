@@ -1,0 +1,70 @@
+name: Build Unsigned iOS IPA
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-26
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Phaser game
+        run: npm run build
+
+      - name: Sync Capacitor iOS project
+        run: npx cap sync ios
+
+      - name: Build unsigned iOS app
+        shell: bash
+        run: |
+          if [ -d "ios/App/App.xcworkspace" ]; then
+            PROJECT_ARGS=(-workspace ios/App/App.xcworkspace)
+          else
+            PROJECT_ARGS=(-project ios/App/App.xcodeproj)
+          fi
+
+          xcodebuild \
+            "${PROJECT_ARGS[@]}" \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath ios/build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Package unsigned IPA
+        shell: bash
+        run: |
+          mkdir -p ipa-package/Payload
+
+          cp -R ios/build/Build/Products/Release-iphoneos/App.app \
+            ipa-package/Payload/
+
+          cd ipa-package
+          zip -r ../DetectiveDrive.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: DetectiveDrive-IPA
+          path: DetectiveDrive.ipa
+          if-no-files-found: error
+          retention-days: 7
