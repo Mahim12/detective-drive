@@ -7,14 +7,27 @@
     "dev": "vite",
     "dev:phone": "concurrently \"vite --host 0.0.0.0\" \"ngrok http 5173\"",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "audit": "npm audit",
+    "quality": "npm run format && npm run lint && npm run format:check && npm run audit"
+  },
+  "overrides": {
+    "i18next-http-backend": "4.1.0"
   },
   "devDependencies": {
     "@capacitor/assets": "^4.0.0",
     "@capacitor/cli": "^8.6.2",
     "@emnapi/core": "^2.0.0-beta.2",
     "@emnapi/runtime": "^1.11.3",
+    "@eslint/js": "^10.0.1",
     "concurrently": "^10.0.7",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
     "vite": "^8.3.6"
   },
   "dependencies": {

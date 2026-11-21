@@ -60,32 +60,6 @@ export default class GameScene extends Phaser.Scene {
 
     // Handle viewport changes
     this.scale.on("resize", this.handleResize, this);
-    console.log(
-      "Phaser scale width/height:",
-      this.scale.width,
-      this.scale.height,
-    );
-
-    console.log("Phaser parent size:", this.scale.parentSize);
-
-    console.log("Phaser game size:", this.scale.gameSize);
-
-    console.log("Phaser display size:", this.scale.displaySize);
-
-    console.log("Canvas drawing buffer:", {
-      width: this.game.canvas.width,
-      height: this.game.canvas.height,
-    });
-
-    console.log(
-      "Canvas displayed size:",
-      this.game.canvas.getBoundingClientRect(),
-    );
-
-    console.log(
-      "App container size:",
-      document.querySelector("#app").getBoundingClientRect(),
-    );
   }
 
   handleResize(gameSize) {
