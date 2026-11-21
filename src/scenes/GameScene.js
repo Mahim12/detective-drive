@@ -27,7 +27,7 @@ export default class GameScene extends Phaser.Scene {
     this.input.addPointer(1);
 
     // Background
-    this.add.rectangle(
+    this.background = this.add.rectangle(
       width / 2,
       height / 2,
       width,
@@ -53,6 +53,36 @@ export default class GameScene extends Phaser.Scene {
       fontSize: "20px",
       color: "#ffffff",
     });
+
+    // Remember dimensions for proportional repositioning
+    this.previousWidth = width;
+    this.previousHeight = height;
+
+    // Handle viewport changes
+    this.scale.on("resize", this.handleResize, this);
+  }
+
+  handleResize(gameSize) {
+    const { width, height } = gameSize;
+
+    // Resize background
+    this.background.setPosition(width / 2, height / 2).setSize(width, height);
+
+    // Preserve the car's relative position
+    this.car.x = (this.car.x / this.previousWidth) * width;
+    this.car.y = (this.car.y / this.previousHeight) * height;
+
+    this.car.updateBounds();
+
+    // Reposition joysticks and their labels
+    this.playerInput.joystick.resize(width, height);
+
+    // Reposition speed display
+    this.speedText.setPosition(20, 20);
+
+    // Store new dimensions
+    this.previousWidth = width;
+    this.previousHeight = height;
   }
 
   update(time, delta) {

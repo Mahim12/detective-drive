@@ -42,19 +42,30 @@ export default class JoystickControls {
       forceMin: 0,
       fixed: true,
     });
+  }
 
-    scene.add.text(
-      JOYSTICK_MARGIN - 55,
-      height - JOYSTICK_BOTTOM_OFFSET - 85,
-      "STEERING",
-      { fontSize: "14px", color: "#ffffff" },
+  resize(width, height) {
+    // Move steering joystick to bottom-left
+    this.directionJoystick.setPosition(
+      JOYSTICK_MARGIN,
+      height - JOYSTICK_BOTTOM_OFFSET,
     );
 
-    scene.add.text(
+    // Move speed joystick to bottom-right
+    this.speedJoystick.setPosition(
+      width - JOYSTICK_MARGIN,
+      height - JOYSTICK_BOTTOM_OFFSET,
+    );
+
+    // Move labels
+    this.steeringLabel.setPosition(
+      JOYSTICK_MARGIN - 55,
+      height - JOYSTICK_BOTTOM_OFFSET - 85,
+    );
+
+    this.speedLabel.setPosition(
       width - JOYSTICK_MARGIN - 35,
       height - JOYSTICK_BOTTOM_OFFSET - 85,
-      "SPEED",
-      { fontSize: "14px", color: "#ffffff" },
     );
   }
 
