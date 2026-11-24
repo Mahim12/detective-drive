@@ -25,6 +25,7 @@
     "@emnapi/runtime": "^1.11.3",
     "@eslint/js": "^10.0.1",
     "concurrently": "^10.0.7",
+    "dependency-cruiser": "^18.9.0",
     "eslint": "^10.15.0",
     "globals": "^17.14.0",
     "prettier": "^3.10.1",
